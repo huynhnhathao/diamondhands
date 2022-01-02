@@ -4,8 +4,6 @@ title:  "Hiểu rõ về 51% attack"
 date:   2022-01-02 13:05:18 +0700
 categories: hack_the_blockchain
 ---
-# Hiểu rõ về 51% attack
-
 Chúng ta có lẽ ai cũng đã nghe mạng blockchain có thể bị tấn công bằng 51% attack khi một cá nhân hay tập thể nào đó nắm giữ 51% hashing power của toàn mạng, nhưng cụ thể 51% attack tấn công như thế nào và những thứ mà hacker có thể làm khi dùng 51% attack là gì?
 
 Trước tiên ta cần biết nắm giữ 51% hashing power của toàn mạng có nghĩa là gì. 
