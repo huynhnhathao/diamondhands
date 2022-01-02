@@ -1,0 +1,49 @@
+---
+layout: post
+title:  "Hiểu rõ về 51% attack"
+date:   2022-01-02 13:05:18 +0700
+categories: hack_the_blockchain
+---
+# Hiểu rõ về 51% attack
+
+Chúng ta có lẽ ai cũng đã nghe mạng blockchain có thể bị tấn công bằng 51% attack khi một cá nhân hay tập thể nào đó nắm giữ 51% hashing power của toàn mạng, nhưng cụ thể 51% attack tấn công như thế nào và những thứ mà hacker có thể làm khi dùng 51% attack là gì?
+
+Trước tiên ta cần biết nắm giữ 51% hashing power của toàn mạng có nghĩa là gì. 
+
+## Mine a new block
+
+Trong một mạng blockchain để các nodes tham gia đạt được sự thống nhất chung về state của blockchain thì các nodes cần sử dụng một thuật toán consensus, 2 loại thuật toán consensus phổ biến nhất là proof of work (PoW) và proof of stake (PoS), ngoài ra còn nhiều loại consensus algorithms khác. Hiện tại cả Ethereum và Bitcoin đều sử dụng PoW làm consensus algorithm, (Ethereum sẽ nâng cấp lên PoS trong năm 2022 vì một trái đất xanh). Trong PoW, các miners thi đua với nhau để tạo ra block mới nối vào blockchain. Quá trình tạo ra block mới của mỗi miner gồm có:
+
+1. Chọn trong memory pool (mempool) ra các transactions có nhiều tips nhất để thêm vào block của mình. 
+2. Hash block vừa chọn được dùng thuật toán hash (Bitcoin dùng SHA-256, Ethereum dùng Keccak-256) tạo ra một chuỗi 256 bits (chuỗi 64 kí tự Hexadecimal)
+3. Tìm một số nonce, gắn vào trong chuỗi vừa rồi, hash lại lần nữa.
+4. So sánh chuỗi hash mới với target hash, nếu nhỏ hơn thì được xem như là trúng số (được thưởng Bitcoins/Ethereum), nếu lớn hơn thì quay lại bước 3. 
+5. Thông báo cho toàn mạng block mới của mình, các nodes trong mạng sẽ kiểm tra block của mình, nếu hợp lệ thì họ sẽ thêm vào blockchain của họ và tiếp tục tìm block mới(quay lại bước 1).
+
+Cách duy nhất để tìm ra số nonce(number only use once) là thử từng số cho đến khi nào tìm ra số phù hợp. Nên ta có thể giả sử miner nào có khả năng thử các số nonce nhanh hơn thì cơ hội tìm ra số nonce trước sẽ cao hơn(mặc dù có yếu tố may mắn). 
+
+Quay lại câu hỏi một miner nắm giữ 51% hashing power của toàn mạng nghĩa là miner đó có khả năng thử các giá trị nonce nhanh hơn tất cả các nodes khác trong mạng cộng lại(51%), nghĩa là miner đó luôn đào ra block mới nhanh hơn tất các các nodes khác trong mạng.
+
+## Resolve conflict
+
+Tiếp theo ta cần biết cách mà các nodes trong một mạng blockchain giải quyết xung đột như thế nào. Giả sử tại một thời điểm, blockchain bị tách ra làm 2 nhánh tại một block nào đó, các nodes trong mạng cần phải chọn ra nhánh sự thật (the truth), bằng cách chọn nhánh nào dài nhất làm nhánh sự thật. Điều này có nghĩa là nếu một hacker broadcast một blockchain hơn public blockchain hiện tại mà các miners khác đang lưu giữ trong máy, các miners khác sẽ phát hiện ra xung đột và giải quyết xung đột bằng cách chọn ra nhánh dài nhất - nhánh của hacker.
+
+## The hack
+
+Giả sử Mai là hacker. Mai bằng cách nào đó rất tốn kém nắm giữ được 51% hashing power của toàn mạng Bitcoin. Mai muốn tấn công Bitcoin để được tiêu tiền 2 lần (double spend). Sau đây là các bước mà Mai đã lên kế hoạch để tấn công Bitcoin blockchain:
+
+1. Mai dùng 10 bitcoins để mua một con lambo (tương đương 600k USD lúc bitcoin giá 60k USD), 50 bitcoins để mua một căn biệt thự ở Hawaii.
+2. Sau khi Mai gởi transactions của mình lên mạng, transactions của Mai nằm trên mempool chờ các miners khác thêm vào blockchain. Các miners khác thêm transactions của Mai vào blockchain tại block số K.
+3. Tại local blockchain của Mai, em ấy không thêm block K vào mà bắt đầu đào các block khác, nghĩa là kể từ block K, blockchain private của Mai khác với blockchain public của các miners khác. Nhưng vì Mai có đến 51% hashing power của toàn mạng, Mai có thể đào ra block mới nhanh hơn tất các các miners khác trong mạng nên Mai sẽ tạo ra một blockchain private dài hơn blockchain public của Bitcoin 1 block, (blockchain private của Mai không có transactions mà Mai tiêu bitcoins, các transactions đó chỉ có trên blockchain public).
+4. Mai broadcast blockchain private của mình lên mạng. Lúc này các miners khác sẽ kiểm tra blockchain private của Mai và xác nhận nó hợp lệ (các giá trị nonce đều thỏa mãn, các trasactions có chữ ký hợp lệ,...), và phát hiện ra blockchain của Mai xung đột với blockchain của họ, lúc này xung đột được giải quyết bằng cách chọn blockchain dài nhất - blockchain của Mai.
+5. Mai ăn mừng vì đã 51% attack bitcoin thành công và lên kế hoạch cho cuộc tấn công tiếp theo...
+
+Lúc này, với kinh nghiệm 51% attack của mình Mai vẫn còn có thể phá hoại theo một kiểu khác: ngăn chặn mọi giao dịch xuất phát ra từ một địa chỉ nào đó hay ngăn chặn mọi nguồn tiền gởi vào một địa chỉ nào đó, bằng cách bỏ qua các transactions đi ra/đi vào địa chỉ đó. Nhưng vẫn còn một điều Mai chưa tính tới...
+
+## Consequences of the 51% attack
+
+Ngay hôm sau ngày Mai tấn công Bitcoin blockchain, các journals nổi tiếng về tài chính nước ngoài rầm rộ đưa tin Bitcoin bị tấn công, các nhà đầu tư lập tức panic-sell toàn bộ bitcoins của mình dẫn đến giá bitcoin rớt tận sàn, hoàn toàn vô giá trị, vì, đoán xem, không còn ai tin vào giá trị của bitcoin nữa. Thế là các nhà đầu tư lớn nhỏ chuyển sang mua Ethereum vì Ethereum hứa sẽ chuyển sang PoS vào năm 2022, và 51% attack PoS có vẻ khó xảy ra hơn 51% attack vào PoW. Vì 51% attack PoS yêu cầu hacker chiếm giữ 51% giá trị của toàn mạng, và phải thế chấp số coins đó để có thể tạo ra block mới. Nếu hacker có hành vi phá hoại, toàn bộ coins thế chấp sẽ bị tịch thu.
+
+Cho nên, so sánh giữa 51% attack PoW sẽ dễ dàng hơn là 51% attack PoS, vì ít ra sau khi tấn công số GPUs của hacker (giả sử hacker mua GPUs, nếu mua application-specific integrated circuit (ASIC) để mining thì...) vẫn còn đó để bán cho các game thủ, còn tấn công vào PoS thì xem như mất hết coins.
+
+Nếu hacker muốn phá hoại mạng bitcoin để bitcoin không còn giá trị nữa thì có thể dùng 51% attack, còn nếu muố double spending thì, anh/em ấy nên suy nghĩ lại, vì thậm chí hacker có thể sử dụng lại bitcoins của mình lần 2 nhưng có chắc rằng giá trị của bitcoin sau cuộc tấn công vẫn như ban đầu?
