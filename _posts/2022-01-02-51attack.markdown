@@ -37,6 +37,7 @@ Giả sử Mai là hacker. Mai bằng cách nào đó rất tốn kém nắm gi�
 5. Mai ăn mừng vì đã 51% attack bitcoin thành công và lên kế hoạch cho cuộc tấn công tiếp theo...
 
 Lúc này, với kinh nghiệm 51% attack của mình Mai vẫn còn có thể phá hoại theo một kiểu khác: ngăn chặn mọi giao dịch xuất phát ra từ một địa chỉ nào đó hay ngăn chặn mọi nguồn tiền gởi vào một địa chỉ nào đó, bằng cách bỏ qua các transactions đi ra/đi vào địa chỉ đó. Nhưng vẫn còn một điều Mai chưa tính tới...
+Nhưng Mai không thể tự tạo ra bitcoin để thêm vào tài khoản của mình, vì cách duy nhất để tạo ra bitcoin từ hư vô theo giao thức của Bitcoin blockchain là khi miners tạo ra block mới và được thưởng bằng bitcoins. Mai cũng không thể cướp bitcoins từ địa chỉ khác, vì mai không có private key để ký giao dịch chuyển bitcoins từ tài khoản không phải của Mai, nếu Mai vẫn cố chấp làm như vậy thì lúc nhận được các giao dịch đó, các miners khác trong mạng có thể dễ dàng phát hiện ra Mai không có quyền sử dụng bitcoins không phải của mình. 
 
 ## Consequences of the 51% attack
 
