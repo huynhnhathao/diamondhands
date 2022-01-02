@@ -1,7 +1,7 @@
+---
 layout: post
 title:  "Smart contracts là gì?"
 date:   2022-01-02 13:05:18 +0700
-
 categories: smartcontracts
 ---
 
