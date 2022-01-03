@@ -24,7 +24,7 @@ Quay lại câu hỏi một miner nắm giữ 51% hashing power của toàn mạ
 
 ## Resolve conflict
 
-Tiếp theo ta cần biết cách mà các nodes trong một mạng blockchain giải quyết xung đột như thế nào. Giả sử tại một thời điểm, blockchain bị tách ra làm 2 nhánh tại một block nào đó, các nodes trong mạng cần phải chọn ra nhánh sự thật (the truth), bằng cách chọn nhánh nào dài nhất làm nhánh sự thật. Điều này có nghĩa là nếu một hacker broadcast một blockchain hơn public blockchain hiện tại mà các miners khác đang lưu giữ trong máy, các miners khác sẽ phát hiện ra xung đột và giải quyết xung đột bằng cách chọn ra nhánh dài nhất - nhánh của hacker.
+Tiếp theo ta cần biết cách mà các nodes trong một mạng blockchain giải quyết xung đột như thế nào. Giả sử tại một thời điểm, blockchain bị tách ra làm 2 nhánh tại một block nào đó, các nodes trong mạng cần phải chọn ra nhánh sự thật (the truth), bằng cách chọn nhánh nào dài nhất làm nhánh sự thật. Điều này có nghĩa là nếu một hacker broadcast một blockchain dài hơn public blockchain hiện tại mà các miners khác đang lưu giữ trong máy, các miners khác sẽ phát hiện ra xung đột và giải quyết xung đột bằng cách chọn ra nhánh dài nhất - nhánh của hacker.
 
 ## The hack
 
