@@ -22,5 +22,5 @@ Một vài ví dụ về sử dụng smart contracts để giải quyết các v
 
 Smart contracts giúp chúng ta không phải đọc 25 trang hợp đồng mà chỉ một chi tiết nhỏ dấu ở trang 23 có thể làm bất lợi cho chúng ta. Cho dù có đọc hết 25 trang đó, nếu bạn không phải là luật sư thì cũng không thể nhìn ra điểm bất lợi nào được viết trong hợp đồng. 
 
-Nhưng đọc một smart contract viết bằng `Solidity` cũng không hề dễ dàng gì nếu bạn không có bằng khoa học máy tính? Đúng vậy, không phải ai cũng đọc được code, và cũng không phải ai đọc được code và nhìn ra được vấn đề của nó. Nhưng smart contract là mã nguồn mở, nghĩa là nó được công bố trên mạng, ta có thể nhờ vào trí-khôn-của-đám-đông để đọc smart contract và tìm ra các điểm bất thưởng, và ta có thể tin tưởng là nếu có lỗi thì những người có bằng KHMT sẽ tìm ra giùm chúng ta.
+Nhưng đọc một smart contract viết bằng `Solidity` cũng không hề dễ dàng gì nếu bạn không có bằng khoa học máy tính? Đúng vậy, không phải ai cũng đọc được code, và cũng không phải ai đọc được code cũng nhìn ra được vấn đề của nó. Nhưng smart contract là mã nguồn mở, nghĩa là nó được công bố trên mạng, ta có thể nhờ vào trí-khôn-của-đám-đông để đọc smart contract và tìm ra các điểm bất thưởng, và ta có thể tin tưởng là nếu có lỗi thì những người có bằng KHMT sẽ tìm ra giùm chúng ta.
 

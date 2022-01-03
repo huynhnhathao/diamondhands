@@ -8,7 +8,7 @@ Chúng ta có lẽ ai cũng đã nghe mạng blockchain có thể bị tấn cô
 
 Trước tiên ta cần biết nắm giữ 51% hashing power của toàn mạng có nghĩa là gì. 
 
-## Mine a new block
+## Mining a new block
 
 Trong một mạng blockchain để các nodes tham gia đạt được sự thống nhất chung về state của blockchain thì các nodes cần sử dụng một thuật toán consensus, 2 loại thuật toán consensus phổ biến nhất là proof of work (PoW) và proof of stake (PoS), ngoài ra còn nhiều loại consensus algorithms khác. Hiện tại cả Ethereum và Bitcoin đều sử dụng PoW làm consensus algorithm, (Ethereum sẽ nâng cấp lên PoS trong năm 2022 vì một trái đất xanh). Trong PoW, các miners thi đua với nhau để tạo ra block mới nối vào blockchain. Quá trình tạo ra block mới của mỗi miner gồm có:
 
