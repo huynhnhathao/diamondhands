@@ -1,7 +1,0 @@
----
-layout: post
-title:  "test math"
-date:   2022-01-02 13:05:18 +0700
-categories: ml
----
-$$x_1 = \sigma$$  
