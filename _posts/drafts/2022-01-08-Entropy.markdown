@@ -1,0 +1,66 @@
+---
+
+layout: post
+title:  "Entropy và hàm Loss Cross-Entropy"
+date:   2022-01-08 13:05:18 +0700
+categories: ml
+---
+
+Nếu bạn có học qua Logistic Regression, chắc bạn đã biết hàm loss của Logistic Regression có tên là hàm Cross Entropy. Nhưng Entropy là gì? Cross Entropy là gì? Bài viết này sẽ giải thích vài khái niệm trong lý thuyết thông tin như thông tin của một sự kiện, Entropy của một biến ngẫu nhiên, Cross Entropy dùng làm hàm loss và Kullback-Leibler divergence của hai phân phối.
+
+## Lý thuyết thông tin
+
+Trong bài báo *A mathematical Theory of Communication*, *Claude Shannon* đã sáng lập ra lý thuyết thông tin. Mục tiêu của lý thuyết thông tin là tìm cách gửi tin nhắn từ sender đến recipient một cách tin cậy và hiệu quả. Một tin nhắn ở ở đây được tạo từ các bits, mỗi bit có giá trị 0 hoặc 1. Lý thuyết thông tin cho rằng, việc gửi đi một bit thông tin sẽ làm giảm mức độ *uncertainty* của người nhận đi một nửa. Ví dụ, một trạm phát sóng gởi một bit thông tin đến người nhận cho biết giá trị của biến ngẫu nhiên thời tiết, 0 nghĩa là trời nắng, 1 là trời mưa. Khi người nhận nhận được 1 bit thông tin, mức độ không chắc chắn về thời tiết của người nhận từ 2 khả năng nắng hoặc mưa sẽ bị giảm đi một nửa.
+
+Nếu trạm phát sóng chọn cách phát sóng ra một chuỗi 'rain', 5 ký tự, mỗi ký tự mất một byte, toàn tin nhắn mất 40 bits, thì **lượng thông tin hữu ích** mà người nhận nhận được cũng chỉ có 1 bit. 39 bits còn lại chỉ là thông tin dư thừa.
+
+Nếu biến ngẫu nhiên thời tiết có 8 khả năng khác nhau, tất cả đều có xác suất xảy ra bằng nhau và bằng $0.125$ thì số lượng bits thông tin một tin nhắn phát ra là $log_2(\frac{1}{0.125}) = 3$ bits. Lấy $log_2$ của xác suất của sự kiện xảy ra sẽ cho ta lượng thông tin của sự kiện đó với đơn vị bit.
+
+Bạn có thể thấy, một tin nhắn có lượng thông tin là $K$ bits, nếu ta dùng các cách mã hóa tin nhắn khác nhau và cuối cùng dùng $K'$ bits để mã hóa tin nhắn đó, với $K'>= K$ thì lượng thông tin hữu ích mà người nhận nhận được cũng chỉ có $K$ bits, và lượng thông tin dư thừa là $K'-K$ bits. Việc mà  ta quan tâm là làm sao để $K'-K$ càng nhỏ càng tốt.
+
+##  Thông tin của một sự kiện
+
+ Một sự kiện ở đây là chỉ sự kiện/event của một biến ngẫu nhiên. Một biến ngẫu nhiên có phân phối xác suất của nó, có tập các sự kiện có thể xảy ra của nó, và mỗi sự kiện có một xác suất xảy ra gắn liền với nó (ví dụ này nói về biến ngẫu nhiên rời rạc). Ví dụ, biến ngẫu nhiên tung một cục xí ngầu 6 mặt, tập các sự kiện có thể xảy ra là các con số từ 1 - 6, mỗi sự kiện có xác suất xảy ra bằng nhau và bằng 1/6. Phân phối xác suất của biến ngẫu nhiên này là categorical distribution.
+
+Thông tin của một sự kiện tỉ lệ thuận với mức độ ngạc nhiên của sự kiện đó, nghĩa là nếu một sự kiện có xác suất xảy ra rất thấp mà lại xảy ra thì mức độ ngạc nhiên của nó rất cao và ngược lại. Ví dụ sự kiện mặt trăng rơi xuống trái đất hay nhìn thấy người ngoài hành tinh bay trên bầu trời có lượng thông tin rất lớn, vì xác suất xảy ra của nó rất thấp. Ngược lại, bạn mua vé số và đến chiều bạn biết mình không trúng số, sự kiện này có lượng thông tin rất thấp.
+
+Ta cần một cách để đo lường thông tin của một sự kiện sao cho phù hợp với những gì ta vừa bàn. Đặt $I(A)$ là thông tin của sự kiện $A$ có xác suất $P(A)$, xét công thức sau:
+$$
+I(A) = log(\frac{1}{P(A)}) = log(1)-log(P(A)) = -log(P(A))
+$$
+Hàm $log(x)$ là một hàm luôn tăng, nghĩa là nếu $x_1 < x_2$ thì $log(x_1) <log(x_2)$, để cho thông tin của một sự kiện càng lớn khi xác suất của sự kiện đó càng nhỏ, ta chỉ cần đặt $\frac{1}{P(A)}$ vào trong hàm $log()$. Lúc này $I(A)$ sẽ cho ta giá trị lớn nếu $P(A)$ nhỏ và ngược lại, đúng như những gì ta muốn.
+
+Nếu bạn dùng $log_2()$ trong công thức trên, thì đơn vị của thông tin sẽ là *bits*. Nếu bạn dùng $ln()$, thì đơn vị của thông tin sẽ là *nats*. Thông thường, nếu có liên quan đến đạo hàm thì ta sẽ chọn $ln()$, vì đạo hàm của $ln(x)=\frac{1}{x}$, dễ tính hơn so với các base khác. 
+
+## Entropy của một biến ngẫu nhiên
+
+Entropy của một biến ngẫu nhiên là lượng thông tin trung bình mà ta nhận được từ biến ngẫu nhiên đó. Ta đã biết cách tính thông tin của một sự kiện, để tính thông tin trung bình của một biến ngẫu nhiên ta chỉ cần tính thông tin trung bình của tất cả các sự kiện của biến ngẫu nhiên đó. Đặt $H(X)$ là Entropy của biến ngẫu nhiên $X$, ta có:
+$$
+H(X) = -\sum_{i=1}^{i=n} P(x_i).log_2(P(x_i))
+$$
+Trong công thức trên, ta lấy xác suất của một sự kiện $x_i$ xảy ra nhân với thông tin của sự kiện đó, lặp qua $n$ sự kiện có thể xảy ra của biến ngẫu nhiên $X$ cho ta Entropy của $X$.
+
+ Giờ ta cùng xét ví dụ tính Entropy của biến ngẫu nhiên tung một đồng xu 2 mặt, có phân phối xác suất Bernoulli với một tham số $p$ duy nhất cho ta biết xác suất thành công, trong trường hợp này ta có thể cho nó là xác suất tung ra mặt ngửa (hay xấp, không quan trọng).
+
+Công thức tính entropy của biến ngẫu nhiên tung đồng xu là:
+$$
+E(X) = -[p.log_2(p) + (1-p).log_2(1-p)]
+$$
+với $p$ là xác suất thành công. Vẽ các giá trị của $E$ khi ta thay đổi $p$ trong khoảng $[0,1]$, ta được 
+
+![Screenshot from 2022-01-10 21-09-30](2022-01-08-Entropy.assets/Screenshot from 2022-01-10 21-09-30.png)
+
+
+
+Trong hình trên, trục $x$ là giá trị của $p$, trục $y$ là giá trị của entropy. Ta có thể thấy, entropy lớn nhất khi $p=0.5$, $E = 1$. Nghĩa là, trung bình thì việc biết được một đồng xu tung ra mặt xấp/ngửa khi $p=0.5$ cho ta 1 bit thông tin, vì ta dùng $log_2$.
+
+Điều tương tự xảy ra với khác loại biến ngẫu nhiên khác, entropy đạt cực đại khi xác suất chia đều cho các sự kiện, entropy càng giảm khi xác suất các sự kiện càng rời xa phân phối đều. Ta sẽ khó đoán ra được kết quả của biến ngẫu nhiên sau phép thử là gì khi nó có phân phối đều, nên mức độ ngạc nhiên của ta trên trung bình sẽ cao hơn so với các phân phối càng rời xa phân phối đều.
+
+## Cross Entropy
+
+
+
+
+
+
+
