@@ -14,9 +14,9 @@ Trong bài báo *A mathematical Theory of Communication*, *Claude Shannon* đã 
 
 Nếu trạm phát sóng chọn cách phát sóng ra một chuỗi 'rain', 5 ký tự, mỗi ký tự mất một byte, toàn tin nhắn mất 40 bits, thì **lượng thông tin hữu ích** mà người nhận nhận được cũng chỉ có 1 bit. 39 bits còn lại chỉ là thông tin dư thừa.
 
-Nếu biến ngẫu nhiên thời tiết có 8 khả năng khác nhau, tất cả đều có xác suất xảy ra bằng nhau và bằng $0.125$ thì số lượng bits thông tin một tin nhắn phát ra là $log_2(\frac{1}{0.125}) = 3$ bits. Lấy $log_2$ của xác suất của sự kiện xảy ra sẽ cho ta lượng thông tin của sự kiện đó với đơn vị bit.
+Nếu biến ngẫu nhiên thời tiết có 8 khả năng khác nhau, tất cả đều có xác suất xảy ra bằng nhau và bằng $0.125$ thì số lượng bits thông tin một tin nhắn phát ra là \(log_2(\frac{1}{0.125}) = 3\) bits. Lấy  \(log_2\) của xác suất của sự kiện xảy ra sẽ cho ta lượng thông tin của sự kiện đó với đơn vị bit.
 
-Bạn có thể thấy, một tin nhắn có lượng thông tin là $K$ bits, nếu ta dùng các cách mã hóa tin nhắn khác nhau và cuối cùng dùng $K'$ bits để mã hóa tin nhắn đó, với $K'>= K$ thì lượng thông tin hữu ích mà người nhận nhận được cũng chỉ có $K$ bits, và lượng thông tin dư thừa là $K'-K$ bits. Việc mà  ta quan tâm là làm sao để $K'-K$ càng nhỏ càng tốt.
+Bạn có thể thấy, một tin nhắn có lượng thông tin là \(K\) bits, nếu ta dùng các cách mã hóa tin nhắn khác nhau và cuối cùng dùng \(K'\) bits để mã hóa tin nhắn đó, với \(K'>= K\) thì lượng thông tin hữu ích mà người nhận nhận được cũng chỉ có \(K\) bits, và lượng thông tin dư thừa là \(K'-K\) bits. Việc mà  ta quan tâm là làm sao để \(K'-K\) càng nhỏ càng tốt.
 
 ##  Thông tin của một sự kiện
 
@@ -24,7 +24,9 @@ Bạn có thể thấy, một tin nhắn có lượng thông tin là $K$ bits, n
 
 Thông tin của một sự kiện tỉ lệ thuận với mức độ ngạc nhiên của sự kiện đó, nghĩa là nếu một sự kiện có xác suất xảy ra rất thấp mà lại xảy ra thì mức độ ngạc nhiên của nó rất cao và ngược lại. Ví dụ sự kiện mặt trăng rơi xuống trái đất hay nhìn thấy người ngoài hành tinh bay trên bầu trời có lượng thông tin rất lớn, vì xác suất xảy ra của nó rất thấp. Ngược lại, bạn mua vé số và đến chiều bạn biết mình không trúng số, sự kiện này có lượng thông tin rất thấp.
 
-Ta cần một cách để đo lường thông tin của một sự kiện sao cho phù hợp với những gì ta vừa bàn. Đặt $I(A)$ là thông tin của sự kiện $A$ có xác suất $P(A)$, xét công thức sau:
+Ta cần một cách để đo lường thông tin của một sự kiện sao cho phù hợp với những gì ta vừa bàn. Đặt \(I(A)\) là thông tin của sự kiện \(A\) có xác suất \(P(A)\), xét công thức sau:
+
+
 $$
 I(A) = log(\frac{1}{P(A)}) = log(1)-log(P(A)) = -log(P(A))
 $$
