@@ -1,0 +1,263 @@
+---
+
+layout: post
+title:  "Entropy và hàm Loss Cross-Entropy"
+date:   2022-01-08 13:05:18 +0700
+categories: ml
+---
+
+Nếu bạn có học qua Logistic Regression, chắc bạn đã biết hàm loss của Logistic Regression có tên là hàm CrossEntropy. Nhưng Entropy là gì? CrossEntropy là gì? Bài viết này sẽ giải thích vài khái niệm trong lý thuyết thông tin như thông tin của một sự kiện, Entropy của một biến ngẫu nhiên, CrossEntropy dùng làm hàm loss và Kullback-Leibler divergence giữa hai phân phối xác suất.
+
+## Lý thuyết thông tin
+
+Trong bài báo *A mathematical Theory of Communication*, *Claude Shannon* đã sáng lập ra lý thuyết thông tin. Mục tiêu của lý thuyết thông tin là tìm cách gửi tin nhắn từ sender đến recipient một cách tin cậy và hiệu quả. Một tin nhắn ở ở đây được tạo từ các bits, mỗi bit có giá trị 0 hoặc 1. Lý thuyết thông tin cho rằng, việc gửi đi một bit thông tin sẽ làm giảm mức độ *uncertainty* của người nhận đi một nửa. Ví dụ, một trạm phát sóng gởi một bit thông tin đến người nhận cho biết giá trị của biến ngẫu nhiên thời tiết, 0 nghĩa là trời nắng, 1 là trời mưa. Khi người nhận nhận được 1 bit thông tin, mức độ không chắc chắn về thời tiết của người nhận từ 2 khả năng nắng hoặc mưa sẽ bị giảm đi một nửa.
+
+Nếu trạm phát sóng chọn cách phát sóng ra một chuỗi 'rain', 4 ký tự, mỗi ký tự mất một byte, cả tin nhắn mất 32 bits, thì **lượng thông tin hữu ích** mà người nhận nhận được cũng chỉ có 1 bit. 31 bits còn lại chỉ là thông tin dư thừa.
+
+Nếu biến ngẫu nhiên thời tiết có 8 khả năng khác nhau, tất cả đều có xác suất xảy ra bằng nhau và bằng $0.125$ thì số lượng bits thông tin một tin nhắn phát ra là 
+$$
+log_2(\frac{1}{0.125}) = 3
+$$
+ bits. Lấy  *log2* của xác suất của sự kiện xảy ra sẽ cho ta lượng thông tin của sự kiện đó với đơn vị bit.
+
+Bạn có thể thấy, nếu một tin nhắn có lượng thông tin là K bits, và nếu ta dùng các cách mã hóa tin nhắn khác nhau và cuối cùng dùng K' bits để mã hóa tin nhắn đó, với K'>= K thì lượng thông tin hữu ích mà người nhận nhận được cũng chỉ có K bits, và lượng thông tin dư thừa là K'-K bits. Việc mà  ta quan tâm là làm sao để K'-K càng nhỏ càng tốt.
+
+##  Thông tin của một sự kiện
+
+ Một sự kiện ở đây là chỉ sự kiện (event) của một biến ngẫu nhiên. Một biến ngẫu nhiên có phân phối xác suất của nó, có tập các sự kiện có thể xảy ra của nó, và mỗi sự kiện có một xác suất xảy ra gắn liền với nó (ví dụ này nói về biến ngẫu nhiên rời rạc). Ví dụ, biến ngẫu nhiên tung một cục xí ngầu 6 mặt, tập các sự kiện có thể xảy ra là các con số từ 1 - 6, mỗi sự kiện có xác suất xảy ra bằng nhau và bằng 1/6. Phân phối xác suất của biến ngẫu nhiên này là categorical distribution.
+
+Thông tin của một sự kiện tỉ lệ thuận với mức độ ngạc nhiên của sự kiện đó, nghĩa là nếu một sự kiện có xác suất xảy ra rất thấp mà lại xảy ra thì mức độ ngạc nhiên của nó rất cao và ngược lại. Ví dụ sự kiện mặt trăng rơi xuống trái đất hay nhìn thấy người ngoài hành tinh bay trên bầu trời có lượng thông tin rất lớn, vì xác suất xảy ra của nó rất thấp. Ngược lại, bạn mua vé số và đến chiều bạn biết mình không trúng số, sự kiện này có lượng thông tin rất thấp.
+
+Ta cần một cách để đo lường thông tin của một sự kiện sao cho phù hợp với những gì ta vừa bàn. Đặt I(A) là thông tin của sự kiện A có xác suất P(A), xét công thức sau:
+
+
+
+$$
+\begin{align*}
+I(A) &= log(\frac{1}{P(A)})\\
+&= log(1)-log(P(A))\\
+&= -log(P(A))
+\end{align*}
+$$
+
+
+
+Hàm log(x) là một hàm luôn tăng, nghĩa là nếu 
+$$
+x_1 < x_2
+$$
+  thì 
+$$
+log(x_1) <log(x_2)
+$$
+
+
+. Để cho thông tin của một sự kiện càng lớn khi xác suất của sự kiện đó càng nhỏ, ta chỉ cần đặt 
+$$
+\frac{1}{P(A)}
+$$
+ vào trong hàm log(). Lúc này I(A) sẽ cho ta giá trị lớn nếu P(A) nhỏ và ngược lại, đúng như những gì ta muốn.
+
+Nếu bạn dùng *log2()* trong công thức trên, thì đơn vị của thông tin sẽ là *bits*. Nếu bạn dùng *ln()*, thì đơn vị của thông tin sẽ là *nats*. Thông thường, nếu có liên quan đến đạo hàm thì ta sẽ chọn *ln()*, vì đạo hàm của *ln(x)* dễ tính hơn so với các base khác. 
+
+## Entropy của một biến ngẫu nhiên
+
+Entropy của một biến ngẫu nhiên là lượng thông tin trung bình mà ta nhận được từ biến ngẫu nhiên đó. Ta đã biết cách tính thông tin của một sự kiện, để tính thông tin trung bình của một biến ngẫu nhiên gồm N sự kiện ta chỉ cần tính thông tin trung bình của tất cả các sự kiện của biến ngẫu nhiên đó. Đặt $H(X)$ là Entropy của biến ngẫu nhiên $X$, ta có:
+
+
+
+$$
+H(X) = -\sum_{i=1}^{i=n} P(x_i)*log_2(P(x_i))
+$$
+
+
+
+Trong công thức trên, ta lấy xác suất của một sự kiện x_i xảy ra nhân với thông tin của sự kiện đó, lặp qua *n* sự kiện có thể xảy ra của biến ngẫu nhiên **X** cho ta Entropy của **X**.
+
+ Giờ ta cùng xét ví dụ tính Entropy của biến ngẫu nhiên tung một đồng xu 2 mặt, có phân phối xác suất Bernoulli với một tham số $p$ duy nhất cho ta biết xác suất thành công, trong trường hợp này ta có thể cho nó là xác suất tung ra mặt ngửa (hay xấp, không quan trọng).
+
+Công thức tính entropy của biến ngẫu nhiên tung đồng xu là:
+
+
+
+$$
+H(X) = -[p*log_2(p) + (1-p)*log_2(1-p)]
+$$
+
+
+
+với *p* là xác suất thành công. Vẽ các giá trị của **H** khi ta thay đổi *p* trong khoảng *[0,1]*, ta được 
+
+<img src="2022-01-08-Entropy.assets/Screenshot from 2022-01-10 21-09-30.png" alt="Screenshot from 2022-01-10 21-09-30" style="zoom: 80%;" />
+
+
+
+Trong hình trên, trục $x$ là giá trị của $p$, trục $y$ là giá trị của entropy. Ta có thể thấy, entropy lớn nhất khi p = 0.5, **H** = 1. Nghĩa là, trung bình thì việc biết được một đồng xu tung ra mặt xấp/ngửa khi *p=0.5* cho ta 1 bit thông tin, vì ta dùng *log2*. Trong trường hợp này, biết được một bit thông tin làm giảm đi mức độ *uncertainty* của ta đi một nửa: từ không biết mặt xấp hay ngửa sẽ xuất hiện đến biết được mặt nào xuất hiện.
+
+Ta có thể thấy trong hình trên, khi giá trị của *p* càng xa 0.5 (càng xa phân phối đều) thì entropy càng giảm. Điều tương tự xảy ra với khác loại biến ngẫu nhiên khác, entropy đạt cực đại khi xác suất chia đều cho các sự kiện, entropy càng giảm khi xác suất các sự kiện càng rời xa phân phối đều. Ta sẽ khó đoán ra được kết quả của biến ngẫu nhiên sau phép thử là gì khi nó có phân phối đều, nên mức độ ngạc nhiên của ta trên trung bình sẽ cao hơn so với các phân phối càng rời xa phân phối đều.
+
+## Cross Entropy
+
+Nhắc lại công thức tính Entropy của một phân phối rời rạc:
+
+
+
+$$
+H(X) = -\sum_{i=1}^{n} P(x_i)*log_2(P(x_i))
+$$
+
+
+
+Bây giờ xem xét một ví dụ một trạm phát sóng phát ra thông tin thời tiết mỗi ngày một lần vào buổi sáng. Giả sử biến ngẫu nhiên thời tiết có 4 giá trị: nắng, mưa, mưa lâm râm, mây mù. Xác suất của mỗi sự kiện đều bằng nhau và bằng 0.25. Mỗi ngày trạm phát sóng sẽ phát ra tin nhắn cho biết **giá trị dự đoán** của thời tiết hôm nay. Ta đã biết cách tính entropy của một biến ngẫu nhiên, giờ hãy cùng tính entropy của **biến ngẫu nhiên thời tiết trong tự nhiên** này:
+
+
+
+$$
+\begin{align*}
+H(W) &= -\sum_{i=1}^4 P(x_i)*log_2(x_i)\\
+&=-0.25*log_2(0.25)*4\\
+&=2
+\end{align*}
+$$
+
+
+
+Vậy cứ mỗi tin nhắn ta nhận được từ trạm phát sóng này cho ta 2 bits **thông tin hữu ích**, tức là làm giảm mức độ *uncertainty* của người nhận đi 4 lần. 
+
+Trạm phát sóng cần chọn cách mã hóa tin nhắn của nó để chuyển đi sao cho hiệu quả nhất. Bạn đoán xem, cách mã hóa nào tốt nhất cho trường hợp này? Dùng 2 bits cho mỗi tin nhắn:
+
+- Nắng: 00
+
+- Mưa: 01
+
+- Mưa lâm râm: 10
+
+- Mây mù: 11
+
+Vậy, mỗi tin nhắn phát đi dùng 2 bits, và thông tin của mỗi tin nhắn cũng là 2 bits. Không có bits dư thừa nào trong tin nhắn truyền đi cả.
+
+Trong ví dụ này, điều bạn cần nhớ là có đến 2 phân phối xác suất có cùng tập các sự kiện {nắng, mưa, mưa lâm râm, mây mù}:
+
+-  Phân phối thật sự của biến ngẫu nhiên thời tiết **W**, nó phụ thuộc vào tự nhiên và bạn không thể điều khiển/thay đổi nó được. Điều bạn có thể làm là tìm một mô hình xấp xỉ biến ngẫu nhiên thời tiết này sao cho càng gần càng tốt.
+- Phân phối dự đoán của biến ngẫu nhiên thời tiết **W'**, nó phụ thuộc vào phân phối thật sự của thời tiết (và vào khả năng của trạm phát sóng dự đoán thời tiết). Chính phân phối này là yếu tố quyết định để trạm phát sóng lựa chọn cách mã hóa tin nhắn của mình sao cho thông tin dư thừa trong mỗi tin nhắn càng nhỏ càng tốt.
+
+Bây giờ, giả sử trạm phát sóng đó bị mang đến một nơi khác để làm nhiệm vụ, và người ta quên cập nhật lại cách mã hóa tin nhắn của trạm phát sóng sao cho phù hợp với phân phối xác suất của thời tiết nơi mới. Và phân phối xác suất của biến ngẫu nhiên thời tiết ở nơi mới là:
+
+- Nắng: 0.8
+
+- Mưa: 0.1
+
+- Mưa lâm râm: 0.05
+
+- Mây mù: 0.05
+
+Thử tính entropy của biến ngẫu nhiên thời tiết mới này:
+
+
+
+$$
+\begin{align*}
+H(W) &= -\sum_{i=1}^4 P(x_i)*log_2(x_i)\\
+&=-(0.8*log_2(0.8) + 0.1*log_2(0.1) + 0.05*log_2(0.05) + 0.05*log_2(0.05))\\
+&= - (-0.26 - 0.33 - 0.22)\\
+&= 0.81\\
+\end{align*}
+$$
+
+
+
+Trung bình 0.81 bits thông tin hữu ích cho mỗi tin nhắn, nhưng ta lại dùng 2 bits để mã hóa tin nhắn, tức là có đến 2-0.81=1.19 bits dư thừa. Ta cần thiết kế bộ mã khác sao cho số bits dư thừa giảm xuống càng thấp càng tốt.
+
+Hãy cân nhắc bộ mã dưới đây:
+
+- Nắng: 0
+
+- Mưa: 1
+
+- Mưa lâm râm: 00
+
+- Mây mù: 01
+
+Bây giờ, bạn hãy tính trung bình thì số bits mà trạm phát sóng sẽ phát ra sử dụng bộ mã này:
+
+
+
+$$
+\begin{align*}
+E(messageLength) &= 1*P(Mua) + 1*P(Nang) + 2*P(MuaLamRam) + 2*(MayMu)\\
+&=1*0.8 + 1*0.1 + 2*0.05 + 2*0.05\\
+&=1.1
+
+\end{align*}
+$$
+
+
+
+Với bộ mã mới này, trạm phát sóng trên trung bình dùng 1.1 bits để truyền đi một tin nhắn chứa 0.81 bit thông tin hữu ích, rõ ràng hiệu quả hơn so với bộ mã dùng 2 bits cho mỗi tin nhắn ban đầu. 
+
+Vâng, con số 1.1 bits vừa rồi được gọi là Cross entropy giữa biến ngẫu nhiên thời tiết trong tự nhiên và biến ngẫu nhiên thời tiết dự đoán của trạm phát sóng. Có thể bạn sẽ cảm thấy hơi khó hiểu vì từ đầu đến giờ ta chỉ bàn về cách mã hóa tin nhắn và biến ngẫu nhiên thời tiết thật sự trong tự nhiên tại nơi của trạm phát sóng, vậy biến ngẫu nhiên thời tiết dự đoán ở đâu ra? 
+
+Thật sự thì, khi ta dùng một bộ mã để mã hóa tin nhắn gởi đi thì ta đã tối ưu hóa bộ mã đó lên **phân phối xác suất dự đoán** của ta về biến ngẫu nhiên thời tiết (vì không ai biết chính xác phân phối của thời tiết cả). Cho nên, nếu phân phối xác suất dự đoán của ta càng gần với biến ngẫu nhiên thời tiết ngoài tự nhiên thì bộ mã của ta sẽ càng được tối ưu.
+
+Bây giờ, hãy cùng phân tích công thức tính Cross Entropy giữa hai phân phối xác suất **p(x)** và **q(x)** có cùng một tập *n* các sự kiện:
+
+
+
+$$
+H(p,q) = -\sum_{i=1}^n p(x_i)*log_2(q(x_i))
+$$
+
+
+
+Nếu ráp vào ví dụ vừa rồi của ta, *p()* là phân phối của thời tiết trong tự nhiên, *q()* là phân phối của thời tiết mà trạm phát sóng dự đoán, *log2(q(x))* là chiều dài của tin nhắn *x* ( đơn vị bits) mà trạm phát sóng dùng cho *x*, *p(x)* là xác suất của sự kiện *x* xảy ra trong tự nhiên. Trong trường hợp này bạn có thể tính được *H(p,q)* vì ta giả sử biết được phân phối của cả *p()* và *q()*.  
+
+Bạn hãy suy ngẫm công thức này đến khi nào bạn nhận ra rằng nó chỉ đang tính chiều dài trung bình của tin nhắn mà trạm phát sóng gởi đi với một bộ mã cụ thể và một phân phối xác suất của thời tiết trong tự nhiên cho trước.
+
+Mặc dù trong thực tế bạn không biết được phân phối xác suất của thời tiết trong tự nhiên để tính CrossEntropy với phân phối xác suất dự đoán của bạn, nhưng với các bài toán supervised learning trong machine learning, điều bạn muốn là tìm một phân phối xấp xỉ *q()* sao cho gần với phân phối thực nghiệm *p()* của dữ liệu mà bạn có nhất, nên bạn có thể tính được *H(p,q)*.
+
+## Kullback-Leibler Divergence
+
+Nhắc lại công thức tính CrossEntropy giữa 2 phân phối *p* và *q*:
+
+
+
+$$
+H(p,q) =- \sum_{i=1}^n p(x_i)*log_2(q(x_i))
+$$
+
+
+
+Hãy cân nhắc ví dụ sau: *p()* là phân phối Bernoulli thật sự của một đồng xu mà bạn mới mua, với xác suất thành công là *p*, *q()* là phân phối xác suất dự đoán của bạn về đồng xu đó, với xác suất thành công là *q*. Giả sử giá trị thật của *p=0.33*, với các giá trị khác nhau của *q*, ta hãy vẽ *H(p,q)*.
+
+
+
+![ce](2022-01-08-Entropy.assets/ce.png)
+
+Nhìn hình ta thấy giá trị nhỏ nhất của *H(p,q)* là tại q = 0.33 (khi phân phối *p()* và *q()* bằng nhau), lúc này *H(p,q) = H(p)*. Khi *q* nhận các giá trị khác, *H(p,q)* luôn lớn hơn *H(p)*, và khoảng *H(p,q) - H(p)* chính là KL-Divergence của *p()* và *q()*.
+
+
+
+$$
+H(p,q) = H(p) + d_{KL}(p||q)\\
+$$
+
+
+
+## Hàm loss CrossEntropy
+
+Nhớ lại hàm loss CrossEntropy dùng trong Logistic Regression trên bộ dữ liệu m dòng:
+
+
+
+$$
+Loss = -\frac{1}{m}\sum_{i=1}^m y_i*log(y_i') + (1-y_i)*log(1-y_i')
+$$
+
+
+
+y là label, y' là giá trị dự đoán. y và y' có 2 phân phối khác nhau, hàm loss CrossEntropy sẽ đạt giá trị nhỏ nhất và bằng Entropy(y) khi y = y'. Nếu phân phối của y' càng xa y thì hàm loss sẽ càng lớn. Vậy bằng cách tìm tham số của y' sao cho CrossEntropy(y,y') nhỏ nhất sẽ cho ta phân phối y' gần với y nhất.
+
+---
+
+
+
