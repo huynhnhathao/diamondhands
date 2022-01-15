@@ -216,9 +216,9 @@ $$
 
 Hãy cân nhắc ví dụ sau: *p()* là phân phối Bernoulli thật sự của một đồng xu mà bạn mới mua, với xác suất thành công là *p*, *q()* là phân phối xác suất dự đoán của bạn về đồng xu đó, với xác suất thành công là *q*. Giả sử giá trị thật của *p=0.33*, với các giá trị khác nhau của *q*, ta hãy vẽ *H(p,q)*.
 
+<img src="https://raw.githubusercontent.com/huynhnhathao/diamondhands/main/_posts/2022-01-08-Entropy.assets/ce.png" alt="CrossEntropy" style="zoom: 100%;" />
 
 
-![ce](2022-01-08-Entropy.assets/ce-16422381431851.png)
 
 Nhìn hình ta thấy giá trị nhỏ nhất của *H(p,q)* là tại q = 0.33 (khi phân phối *p()* và *q()* bằng nhau), lúc này *H(p,q) = H(p)*. Khi *q* nhận các giá trị khác, *H(p,q)* luôn lớn hơn *H(p)*, và khoảng *H(p,q) - H(p)* chính là KL-Divergence của *p()* và *q()*.
 
