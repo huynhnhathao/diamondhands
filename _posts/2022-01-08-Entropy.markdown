@@ -84,7 +84,9 @@ $$
 
 với *p* là xác suất thành công. Vẽ các giá trị của **H** khi ta thay đổi *p* trong khoảng *[0,1]*, ta được 
 
-<img src="2022-01-08-Entropy.assets/Screenshot from 2022-01-10 21-09-30.png" alt="Screenshot from 2022-01-10 21-09-30" style="zoom: 80%;" />
+| ![HardMaskedXLMR.png]https://github.com/huynhnhathao/diamondhands/blob/main/_posts/2022-01-08-Entropy.assets/Screenshot%20from%202022-01-10%2021-09-30.png |
+| :----------------------------------------------------------: |
+|                          *Entropy*                           |
 
 
 
@@ -148,10 +150,10 @@ Thử tính entropy của biến ngẫu nhiên thời tiết mới này:
 
 
 $$
-H(W) &= -\sum_{i=1}^4 P(x_i)*log_2(x_i)\\
-&=-(0.8*log_2(0.8) + 0.1*log_2(0.1) + 0.05*log_2(0.05) + 0.05*log_2(0.05))\\
-&= - (-0.26 - 0.33 - 0.22)\\
-&= 0.81\\
+H(W) = -\sum_{i=1}^4 P(x_i)*log_2(x_i)\\
+=-(0.8*log_2(0.8) + 0.1*log_2(0.1) + 0.05*log_2(0.05) + 0.05*log_2(0.05))\\
+= - (-0.26 - 0.33 - 0.22)\\
+= 0.81\\
 $$
 
 
@@ -173,9 +175,9 @@ Bây giờ, bạn hãy tính trung bình thì số bits mà trạm phát sóng s
 
 
 $$
-E(messageLength) &= 1*P(Mua) + 1*P(Nang) + 2*P(MuaLamRam) + 2*(MayMu)\\
-&=1*0.8 + 1*0.1 + 2*0.05 + 2*0.05\\
-&=1.1
+E(messageLength) = 1*P(Mua) + 1*P(Nang) + 2*P(MuaLamRam) + 2*(MayMu)\\
+=1*0.8 + 1*0.1 + 2*0.05 + 2*0.05\\
+=1.1
 $$
 
 
@@ -218,7 +220,11 @@ Hãy cân nhắc ví dụ sau: *p()* là phân phối Bernoulli thật sự củ
 
 
 
-![ce](2022-01-08-Entropy.assets/ce.png)
+```
+| ![HardMaskedXLMR.png]https://github.com/huynhnhathao/diamondhands/blob/main/_posts/2022-01-08-Entropy.assets/ce.png | 
+|:--:| 
+| *CrossEntropy* |
+```
 
 Nhìn hình ta thấy giá trị nhỏ nhất của *H(p,q)* là tại q = 0.33 (khi phân phối *p()* và *q()* bằng nhau), lúc này *H(p,q) = H(p)*. Khi *q* nhận các giá trị khác, *H(p,q)* luôn lớn hơn *H(p)*, và khoảng *H(p,q) - H(p)* chính là KL-Divergence của *p()* và *q()*.
 
