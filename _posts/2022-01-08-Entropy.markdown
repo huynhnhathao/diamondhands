@@ -33,11 +33,7 @@ Ta cần một cách để đo lường thông tin của một sự kiện sao c
 
 
 $$
-\begin{align*}
-I(A) &= log(\frac{1}{P(A)})\\
-&= log(1)-log(P(A))\\
-&= -log(P(A))
-\end{align*}
+I(A) = log(\frac{1}{P(A)})= log(1)-log(P(A))= -log(P(A))
 $$
 
 
@@ -62,7 +58,7 @@ Nếu bạn dùng *log2()* trong công thức trên, thì đơn vị của thôn
 
 ## Entropy của một biến ngẫu nhiên
 
-Entropy của một biến ngẫu nhiên là lượng thông tin trung bình mà ta nhận được từ biến ngẫu nhiên đó. Ta đã biết cách tính thông tin của một sự kiện, để tính thông tin trung bình của một biến ngẫu nhiên gồm N sự kiện ta chỉ cần tính thông tin trung bình của tất cả các sự kiện của biến ngẫu nhiên đó. Đặt $H(X)$ là Entropy của biến ngẫu nhiên $X$, ta có:
+Entropy của một biến ngẫu nhiên là lượng thông tin trung bình mà ta nhận được từ biến ngẫu nhiên đó. Ta đã biết cách tính thông tin của một sự kiện, để tính thông tin trung bình của một biến ngẫu nhiên gồm N sự kiện ta chỉ cần tính thông tin trung bình của tất cả các sự kiện của biến ngẫu nhiên đó. Đặt $H(X)$ là Entropy của biến ngẫu nhiên *X*, ta có:
 
 
 
@@ -113,11 +109,7 @@ Bây giờ xem xét một ví dụ một trạm phát sóng phát ra thông tin 
 
 
 $$
-\begin{align*}
-H(W) &= -\sum_{i=1}^4 P(x_i)*log_2(x_i)\\
-&=-0.25*log_2(0.25)*4\\
-&=2
-\end{align*}
+H(W) = -\sum_{i=1}^4 P(x_i)*log_2(x_i)=-0.25*log_2(0.25)*4=2
 $$
 
 
@@ -156,12 +148,10 @@ Thử tính entropy của biến ngẫu nhiên thời tiết mới này:
 
 
 $$
-\begin{align*}
 H(W) &= -\sum_{i=1}^4 P(x_i)*log_2(x_i)\\
 &=-(0.8*log_2(0.8) + 0.1*log_2(0.1) + 0.05*log_2(0.05) + 0.05*log_2(0.05))\\
 &= - (-0.26 - 0.33 - 0.22)\\
 &= 0.81\\
-\end{align*}
 $$
 
 
@@ -183,12 +173,9 @@ Bây giờ, bạn hãy tính trung bình thì số bits mà trạm phát sóng s
 
 
 $$
-\begin{align*}
 E(messageLength) &= 1*P(Mua) + 1*P(Nang) + 2*P(MuaLamRam) + 2*(MayMu)\\
 &=1*0.8 + 1*0.1 + 2*0.05 + 2*0.05\\
 &=1.1
-
-\end{align*}
 $$
 
 
