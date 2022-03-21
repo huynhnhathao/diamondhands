@@ -1,3 +1,10 @@
+---
+
+layout: post
+title:  "Smart Contracts Tricks for Hackers"
+date:   2022-03-21 13:05:18 +0700
+categories: smartcontract
+---
 # Smart contract notes for hacker
 
 1. SWC-136: Private variables are not that private, everyone can see your private variables.
