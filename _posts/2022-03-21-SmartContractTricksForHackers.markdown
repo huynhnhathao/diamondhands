@@ -1,7 +1,7 @@
 ---
 
 layout: post
-title:  "Smart Contracts Tricks for Hackers"
+title:  "Smart Contracts Notes for Hackers"
 date:   2022-03-21 13:05:18 +0700
 categories: smartcontract
 ---
