@@ -29,8 +29,14 @@ categories: smartcontract
    1. An external function must use `calldata` location for its dynamic parameters
    2. `calldata` can only be used in function parameters, not in the logic of the function.
    3. More [here](https://ethereum.stackexchange.com/questions/74442/when-should-i-use-calldata-and-when-should-i-use-memory).
+3. Function overriding: 
+   1. Base contracts can have `virtual` functions that marked with `virtual` keyword, to explicitly signal that this function can be override. An inheriting contract which want to override a virtual function of its parent must explicitly use the `override` keyword in its function declaration. 
+   2. Functions with `private` visibility can not be `virtual`
+   3. Functions without implementing must be marked with `virtual` outside of interfaces. In interfaces, all functions are automatically considered `virtual`.
 
+## When writing smart contracts
 
+1. Always split the `withdraw` and `deposit/lock/fund` to two functions, [see this](https://docs.soliditylang.org/en/v0.8.13/common-patterns.html#withdrawal-from-contracts) 
 
 ## References
 
