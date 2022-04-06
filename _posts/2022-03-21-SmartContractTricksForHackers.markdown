@@ -37,6 +37,7 @@ categories: smartcontract
 ## When writing smart contracts
 
 1. Always split the `withdraw` and `deposit/lock/fund` to two functions, [see this](https://docs.soliditylang.org/en/v0.8.13/common-patterns.html#withdrawal-from-contracts) 
+2. Consider using the [Fail-safe mode](https://docs.soliditylang.org/en/v0.8.13/security-considerations.html#include-a-fail-safe-mode): add checks in functions, if something unexpected happened, pause the contract immediately, wait for the owners to unpause it.
 
 ## References
 
