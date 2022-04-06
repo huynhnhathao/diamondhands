@@ -39,6 +39,9 @@ categories: smartcontract
 1. Always split the `withdraw` and `deposit/lock/fund` to two functions, [see this](https://docs.soliditylang.org/en/v0.8.13/common-patterns.html#withdrawal-from-contracts) 
 2. Consider using the [Fail-safe mode](https://docs.soliditylang.org/en/v0.8.13/security-considerations.html#include-a-fail-safe-mode): add checks in functions, if something unexpected happened, pause the contract immediately, wait for the owners to unpause it.
 
+
+## Gas optimizing
+1. [Tight Variable Packing](https://fravoll.github.io/solidity-patterns/tight_variable_packing.html). One storage slot is 32 bytes in size, and the state variables of contracts are packed together starting from the 0 position. For example, `uint128`, `uint128`, `uint256` is better than `uint128`, `uint256`, `uint128` because the former takes 2 storage slots and the later takes 3 storage slots.
 ## References
 
 1. [Smart Contract Weakness Classification and Test Cases](https://swcregistry.io/)
