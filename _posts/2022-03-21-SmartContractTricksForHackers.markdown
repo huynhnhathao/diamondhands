@@ -42,6 +42,7 @@ categories: smartcontract
 
 ## Gas optimizing
 1. [Tight Variable Packing](https://fravoll.github.io/solidity-patterns/tight_variable_packing.html). One storage slot is 32 bytes in size, and the state variables of contracts are packed together starting from the 0 position. For example, `uint128`, `uint128`, `uint256` is better than `uint128`, `uint256`, `uint128` because the former takes 2 storage slots and the later takes 3 storage slots.
+2. Avoid repeatedly referencing to an array's length in a for loop. For example: `for(uint256 i; i < arr.length; i++) {}` is bad because it repeatedly accesses to the storage. You should do `uint256 length = arr.length;` then use that `length` memory variable instead. It can save up to 90% of gas usage for array length of more than 100 elements. 
 ## References
 
 1. [Smart Contract Weakness Classification and Test Cases](https://swcregistry.io/)
