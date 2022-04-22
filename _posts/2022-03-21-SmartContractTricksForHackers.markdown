@@ -7,7 +7,7 @@ categories: smartcontract
 ---
 # Smart contract weaknesses in short 
 
-1. SWC-136: Private variables are not that private, everyone can see your private variables.
+1. SWC-136: Private variables are not that private, everyone can see your private variables. Private variables only mean that they are not visible in derived contracts, but they are still there. 
 2. SWC-135: `msg.sender.call{value : 100}` will not send anything if it does not have `("")`.
 3. SWC-134: Don't use `msg.sender.transfer(amount);` or `send()`, use `call()` with *check-effect-interact* and re-entrance guard.
 4. SWC-132:  Never assume your contract's ether balance with exact value, anyone can forcibly send ether to your contract (using `selfdestruct(address)`) and potentially render it useless and lock ethers.
@@ -43,6 +43,7 @@ categories: smartcontract
 ## Gas optimizing
 1. [Tight Variable Packing](https://fravoll.github.io/solidity-patterns/tight_variable_packing.html). One storage slot is 32 bytes in size, and the state variables of contracts are packed together starting from the 0 position. For example, `uint128`, `uint128`, `uint256` is better than `uint128`, `uint256`, `uint128` because the former takes 2 storage slots and the later takes 3 storage slots.
 2. Avoid repeatedly referencing to an array's length in a for loop. For example: `for(uint256 i; i < arr.length; i++) {}` is bad because it repeatedly accesses to the storage. You should do `uint256 length = arr.length;` then use that `length` memory variable instead. It can save up to 90% of gas usage for array length of more than 100 elements. 
+3. Do not copy the whole storage array into memory. Just access the storage array instead.
 ## References
 
 1. [Smart Contract Weakness Classification and Test Cases](https://swcregistry.io/)

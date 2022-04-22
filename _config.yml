@@ -21,7 +21,7 @@
 title: Diamond hands 
 email: hao dot ihuynhnhat at gmail dot com
 description: >- # this means to ignore newlines until "baseurl:"
-  Here we learn to be an intelligent crypto investor!
+  What is the purpose of our existence?
 baseurl: "/diamondhands" # the subpath of your site, e.g. /blog
 url: "https://huynhnhathao.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
 # twitter_username: jekyllrb
