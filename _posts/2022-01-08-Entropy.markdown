@@ -18,7 +18,7 @@ Nếu biến ngẫu nhiên thời tiết có 8 khả năng khác nhau, tất c�
 $$
 log_2(\frac{1}{0.125}) = 3
 $$
- bits. Lấy  *log2* của xác suất của sự kiện xảy ra sẽ cho ta lượng thông tin của sự kiện đó với đơn vị bit.
+ bits. Lấy  *log2* của 1 / xác suất của sự kiện xảy ra sẽ cho ta lượng thông tin của sự kiện đó với đơn vị bit.
 
 Bạn có thể thấy, nếu một tin nhắn có lượng thông tin là K bits, và nếu ta dùng các cách mã hóa tin nhắn khác nhau và cuối cùng dùng K' bits để mã hóa tin nhắn đó, với K'>= K thì lượng thông tin hữu ích mà người nhận nhận được cũng chỉ có K bits, và lượng thông tin dư thừa là K'-K bits. Việc mà  ta quan tâm là làm sao để K'-K càng nhỏ càng tốt.
 
@@ -48,7 +48,7 @@ log(x_1) <log(x_2)
 $$
 
 
-. Để cho thông tin của một sự kiện càng lớn khi xác suất của sự kiện đó càng nhỏ, ta chỉ cần đặt 
+Để cho thông tin của một sự kiện càng lớn khi xác suất của sự kiện đó càng nhỏ, ta chỉ cần đặt 
 $$
 \frac{1}{P(A)}
 $$
@@ -58,7 +58,7 @@ Nếu bạn dùng *log2()* trong công thức trên, thì đơn vị của thôn
 
 ## Entropy của một biến ngẫu nhiên
 
-Entropy của một biến ngẫu nhiên là lượng thông tin trung bình mà ta nhận được từ biến ngẫu nhiên đó. Ta đã biết cách tính thông tin của một sự kiện, để tính thông tin trung bình của một biến ngẫu nhiên gồm N sự kiện ta chỉ cần tính thông tin trung bình của tất cả các sự kiện của biến ngẫu nhiên đó. Đặt $H(X)$ là Entropy của biến ngẫu nhiên *X*, ta có:
+Entropy của một biến ngẫu nhiên là lượng thông tin trung bình mà ta nhận được từ biến ngẫu nhiên đó. Ta đã biết cách tính thông tin của một sự kiện, để tính thông tin trung bình của một biến ngẫu nhiên gồm N sự kiện ta chỉ cần tính thông tin trung bình của tất cả các sự kiện của biến ngẫu nhiên đó. Đặt $$H(X)$$ là Entropy của biến ngẫu nhiên *X*, ta có:
 
 
 
@@ -68,9 +68,9 @@ $$
 
 
 
-Trong công thức trên, ta lấy xác suất của một sự kiện x_i xảy ra nhân với thông tin của sự kiện đó, lặp qua *n* sự kiện có thể xảy ra của biến ngẫu nhiên **X** cho ta Entropy của **X**.
+Trong công thức trên, ta lấy xác suất của một sự kiện $$x_i$$ xảy ra nhân với thông tin của sự kiện đó, lặp qua *n* sự kiện có thể xảy ra của biến ngẫu nhiên **X** cho ta Entropy của **X**.
 
- Giờ ta cùng xét ví dụ tính Entropy của biến ngẫu nhiên tung một đồng xu 2 mặt, có phân phối xác suất Bernoulli với một tham số $p$ duy nhất cho ta biết xác suất thành công, trong trường hợp này ta có thể cho nó là xác suất tung ra mặt ngửa (hay xấp, không quan trọng).
+ Giờ ta cùng xét ví dụ tính Entropy của biến ngẫu nhiên tung một đồng xu 2 mặt, có phân phối xác suất Bernoulli với một tham số $$p$$ duy nhất cho ta biết xác suất thành công, trong trường hợp này ta có thể cho nó là xác suất tung ra mặt ngửa (hay xấp, không quan trọng).
 
 Công thức tính entropy của biến ngẫu nhiên tung đồng xu là:
 
