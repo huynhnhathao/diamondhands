@@ -1,10 +1,10 @@
----
+<!-- ---
 
 layout: post
 title:  "Golang recipes"
 date:   2022-05-14 13:05:18 +0700
 categories: golang
----
+--- -->
 
 ## Rules
 - If no initial value is given to a variable, the Go compiler will assign it with a default zero value.

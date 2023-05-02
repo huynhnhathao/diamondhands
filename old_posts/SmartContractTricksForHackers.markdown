@@ -1,10 +1,10 @@
----
+<!-- ---
 
 layout: post
 title:  "Smart Contracts Notes for noobs"
 date:   2022-03-21 13:05:18 +0700
 categories: smartcontract
----
+--- -->
 # Smart contract weaknesses in short 
 
 1. SWC-136: Private variables are not that private, everyone can see your private variables. Private variables only mean that they are not visible in derived contracts, but they are still there. 
