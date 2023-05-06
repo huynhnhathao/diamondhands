@@ -1,11 +1,11 @@
 ---
 
 layout: post
-title:  "Học về mạng máy tính"
+title:  "Computer networking"
 date:   2023-05-02 13:05:18 +0700
 categories: computer-networking
 ---
-Bài viết này sẽ đề cập tới rất nhiều vấn đề liên quan tới computer networking.
+We will talk a lot about computer networking in this post.
 # Introduction to computer networking
 ## The TCP/IP five layers network model
 5 layers from bottom to top:
@@ -40,4 +40,4 @@ We call all any device that connects to the internet a node. A server is somethi
 4. Full-duplex mean both ends can communicate at the same time.
 5. Simplex communication is unidirectional. Only one end can communicate with the other.
 6. Half-duplex means can communicate both directions but can not at the same time.
-7. Network ports: the end of a physical cable is a plug. It need to be plugged into a port. The most common plug is the RJ45 or register jack 45. It's one of many cable plug specification but by far is the most common. Of course a RJ45 plug can connect to a RJ45 port. Switches will have many network ports because it connects many devices together. Network ports usually have 2 LED lights for "debugging" the network status. One of them is the `link` light, it will be lit when the cable properly connected to two devices that are
+7. Network ports: the end of a physical cable is a plug. It need to be plugged into a port. The most common plug is the RJ45 or register jack 45. It's one of many cable plug specification but by far is the most common. Of course a RJ45 plug can connect to a RJ45 port. Switches will have many network ports because it connects many devices together. Network ports usually have 2 LED lights for "debugging" the network status. One of them is the `link` light, it will be lit when the cable properly connected to two devices that are both powered on. Another is the `activity` light, which will flash when there is data actively transmitted across the cable.
