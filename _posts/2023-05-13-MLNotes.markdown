@@ -1,0 +1,18 @@
+---
+
+layout: post
+title:  "My succinct and random notes on ML"
+date:   2023-05-02 13:05:18 +0700
+categories: ml
+---
+1. In a smooth and easy to spot loss landscape, Gradient descend with momentum feels like has an advantages fo going faster to the minimum than Adam, as an example, 50 epochs in momentum compare to 200 epochs of Adam to get to the same minimum. One strategy is to use momentum for a couple of dozen epochs as a starting point then use Adam.
+2. Batch size determines the frequency of updates. The smaller the batches, the more, and the quicker, the updates. So in the first stage of training, we may want to use small batch size to go quicker to the minimum direction of the loss landscape, then after we are close enough to the minimum, switch to bigger batch size for a more stable and accurate step toward the minimum.
+3. Initialization is the first point you set on the loss landscape, if you set it too far from the minimum, it will take a longer time to go to the minimum i.e more training epochs. If you take the closest possible point on the loss landscape, you effectively shorten the path to the minimum.
+4. A loss landscape doesn't necessary has only one minimum, which means there are multiple set of different weights for a model to has the same minimum cost.
+5. A convex function is a bowl-shape function and it can not have any local minima other than a single global minimum.
+6. Initialing all weights with zeros leads the neurons to learn the same features during training. In fact, any constant initialization will perform very poorly.
+7. Despite breaking the symmetry, initializing the weights with values (i) too small or (ii) too large leads respectively to (i) slow learning or (ii) divergence.
+8. To prevent the gradients of the network’s activations from vanishing or exploding, we will stick to the following rules of thumb:
+    1. The mean of the activations should be zero.
+    2. The variance of the activations should stay the same across every layer.
+9. The recommended initialization method is Xavier initialization 
